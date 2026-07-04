@@ -4,8 +4,7 @@ A **Zygisk** port of the [`pairipfix`](https://github.com/ahmedmani) LSPosed
 module — same license-check bypass technique, but running as a stealthier Zygisk
 native module instead of Xposed, plus a generic native anti-detection shim.
 
-> **Status: work in progress.** Design and implementation plan live in
-> [`plan.md`](./plan.md). Nothing is built yet.
+> **Status: work in progress.** Nothing is built yet.
 
 ## Credits
 
@@ -13,9 +12,6 @@ Based on the original **pairipfix** LSPosed module by
 **[ahmedmani](https://github.com/ahmedmani)**. This project re-implements that
 module's Java-hook technique on Zygisk and extends it. All credit for the original
 bypass approach and the pairip license-check research goes to the original author.
-
-The archived originals (the LSPosed module sources and the reference Frida script)
-are kept under [`reference/`](./reference/) for parity checks.
 
 ## Why Zygisk instead of LSPosed?
 
@@ -41,7 +37,7 @@ runs without the "Get this app from Play" screen.
 ## Build & install
 
 To be documented once implemented (Zygisk module zip, flashable via Magisk /
-KernelSU). See [`plan.md`](./plan.md) §7–§8.
+KernelSU).
 
 ## Detection note
 
