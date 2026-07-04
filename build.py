@@ -222,9 +222,7 @@ def clean_cmd(args):
     abi = '*'
     if args.abi is not None:
         abi = args.abi
-    build_type = '*'
-    if args.abi is not None:
-        build_type = BUILD_TYPE_CHOICES_MAP[args.build_type]
+    build_type = BUILD_DIR_NAME
     for p in Path.glob(BUILD_DIR, f'{build_type}/{abi}'):
         print('Cleaning', p)
         shutil.rmtree(p)
@@ -268,8 +266,6 @@ def build_zip(args):
 
     for p, _, fns in module_path.walk():
         for fn in fns:
-            if fn == 'mazoku':
-                continue
             fix_crlf(p / fn)
     expand_text_file(module_path / 'module.prop', {
         'moduleId': MODULE_ID,

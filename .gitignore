@@ -26,6 +26,7 @@ reference/**/local.properties
 .DS_Store
 *.swp
 .idea/
+__pycache__/
 
 plan.md
 IMPLEMENTATION_PLAN.md

@@ -4,7 +4,7 @@ A **Zygisk** port of the [`pairipfix`](https://github.com/ahmedmani) LSPosed
 module — same license-check bypass technique, but running as a stealthier Zygisk
 native module instead of Xposed, plus a generic native anti-detection shim.
 
-> **Status: work in progress.** 
+> **Status: working — first release (`v0.1.0-dev`).**
 > Happy to read some issues :"D
 
 ## Tested ON
@@ -49,8 +49,11 @@ runs without the "Get this app from Play" screen.
 2. Run `./helper/build-dex.sh` to generate `native/generated/helper.dex` and `native/jni/helper_dex.h`.
 3. Build the module zip:
    ```bash
-   export ANDROID_NDK_HOME=/path/to/android-ndk
-   python build.py zip
+   # Point at your Android SDK; the NDK is resolved from <ANDROID_HOME>/ndk/<ndkVer>
+   export ANDROID_HOME=/path/to/android-sdk
+   python build.py zip                 # NDK version comes from project-config.json
+   # or override the NDK version explicitly:
+   python build.py --ndk 29.0.14206865 zip
    ```
 4. Flash `release/pairipfix-zygisk-*.zip` in Magisk / KernelSU Manager and reboot.
 
