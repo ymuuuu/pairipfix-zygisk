@@ -34,6 +34,10 @@ target_include_directories(xdl PUBLIC external/xdl/xdl/src/main/cpp/include)
 add_library(${MODULE_NAME} SHARED
     jni/main.cpp
     jni/lsplant_init.cpp
+    jni/java_hooks.cpp
+    jni/gate.cpp
+    jni/native_shim.cpp
+    jni/scrub.cpp
 )
 
 target_include_directories(${MODULE_NAME} PRIVATE
