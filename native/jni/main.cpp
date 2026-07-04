@@ -1,5 +1,8 @@
 #include <cstdlib>
 #include <unistd.h>
+#include <lsplant.hpp>
+#include <dobby.h>
+#include <xdl.h>
 #include "log.h"
 #include "zygisk.hpp"
 

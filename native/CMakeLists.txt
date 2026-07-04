@@ -21,10 +21,32 @@ set(CXX_FLAGS "${CXX_FLAGS} -fno-exceptions -fno-rtti -fvisibility=hidden -fvisi
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_FLAGS}")
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(DOBBY_GENERATE_SHARED OFF CACHE INTERNAL "" FORCE)
+set(DOBBY_DEBUG OFF CACHE INTERNAL "" FORCE)
+set(LSPLANT_BUILD_SHARED OFF CACHE INTERNAL "" FORCE)
 
-add_library(${MODULE_NAME} SHARED jni/main.cpp)
-target_include_directories(${MODULE_NAME} PRIVATE ${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/jni)
-target_link_libraries(${MODULE_NAME} PRIVATE log)
+add_subdirectory(external/dobby)
+add_subdirectory(external/lsplant/lsplant/src/main/jni lsplant_build)
+
+add_library(xdl STATIC external/xdl/xdl/src/main/cpp/xdl.c)
+target_include_directories(xdl PUBLIC external/xdl/xdl/src/main/cpp/include)
+
+add_library(${MODULE_NAME} SHARED
+    jni/main.cpp
+)
+
+target_include_directories(${MODULE_NAME} PRIVATE
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/jni
+    external/lsplant/lsplant/src/main/jni/include
+    external/dobby/include
+)
+
+target_link_libraries(${MODULE_NAME} PRIVATE
+    lsplant_static
+    dobby
+    xdl
+    log
+)
+
 strip_and_move(${MODULE_NAME})

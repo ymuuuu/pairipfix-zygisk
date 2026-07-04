@@ -1,0 +1,9 @@
+[submodule "native/external/lsplant"]
+	path = native/external/lsplant
+	url = https://github.com/LSPosed/LSPlant
+[submodule "native/external/dobby"]
+	path = native/external/dobby
+	url = https://github.com/LSPosed/Dobby
+[submodule "native/external/xdl"]
+	path = native/external/xdl
+	url = https://github.com/hexhacking/xDL
