@@ -4,11 +4,12 @@ A **Zygisk** port of the [`pairipfix`](https://github.com/ahmedmani) LSPosed
 module — same license-check bypass technique, but running as a stealthier Zygisk
 native module instead of Xposed, plus a generic native anti-detection shim.
 
-> **Status: work in progress.** The native module (Zygisk entry, LSPlant Java
-> hooks, helper dex, native shim) is implemented but **not yet built or tested on a
-> device**. Building requires an Android NDK + SDK build-tools (for `d8`); the
-> embedded `helper.dex` must be generated first (step 2 below) or the build fails
-> by design.
+> **Status: work in progress.** 
+> Happy to read some issues :"D
+
+## Tested ON
+
+> Pixel 6A bluejay | Android 16 | KernelSU-Next | SUSFSv2.1
 
 ## Credits
 
@@ -38,6 +39,10 @@ signature against repackaging, and detects hooking/debugging tools. This module
 neutralizes the license/install-origin/signature Java checks so a sideloaded APK
 runs without the "Get this app from Play" screen.
 
+## Installation
+
+1. Flash `pairipfix-zygisk-*.zip` in Magisk / KernelSU Manager and reboot.
+
 ## Build & install
 
 1. Put `android.jar` and `d8.jar` into `build-tools/` (see `build-tools/README.txt`).
@@ -51,13 +56,6 @@ runs without the "Get this app from Play" screen.
 
 No per-app configuration is needed: the module auto-detects pairip apps via the
 `com.pairip.VMRunner` class.
-
-## Detection note
-
-If a specific app still instant-crashes on launch, it may be detecting the module.
-As with the original, try
-[BetterKnownInstalled](https://github.com/Pixel-Props/BetterKnownInstalled) as an
-alternative.
 
 ## Legal
 
