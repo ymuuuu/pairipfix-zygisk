@@ -1,0 +1,21 @@
+# Claude Code local
+.claude/
+
+# Build output
+/release/
+/native/build/
+compile_commands.json
+*.o
+*.so.debug
+
+# Android/Gradle (reference module)
+reference/**/build/
+reference/**/.gradle/
+reference/**/local.properties
+*.apk
+*.aab
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
