@@ -40,7 +40,7 @@ public:
     }
 
     void postAppSpecialize(const AppSpecializeArgs *args) override {
-        JNIEnv* env = api->getEnv();
+        // JNIEnv is provided at onLoad and stored as `env`; this API has no getEnv().
         const char* nice = env->GetStringUTFChars(args->nice_name, nullptr);
         g_self_package = nice ? nice : "";
         env->ReleaseStringUTFChars(args->nice_name, nice);

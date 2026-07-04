@@ -4,9 +4,15 @@
 # Build output
 /release/
 /native/build/
+/my_build/
+/output/
 compile_commands.json
 *.o
 *.so.debug
+
+# Generated helper dex build artifacts (helper_dex.h is committed; these are not)
+native/generated/
+helper/classes/
 
 # Android/Gradle (reference module)
 reference/

@@ -28,4 +28,4 @@ with open(sys.argv[2], 'w') as f:
     f.write(f"static const size_t kHelperDexLen = {len(data)};\n")
 PY
 
-echo "helper.dex: $(wc -c < \"$OUT/helper.dex\") bytes"
+echo "helper.dex: $(wc -c < "$OUT/helper.dex") bytes"

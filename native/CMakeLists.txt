@@ -28,7 +28,12 @@ set(LSPLANT_BUILD_SHARED OFF CACHE INTERNAL "" FORCE)
 add_subdirectory(external/dobby)
 add_subdirectory(external/lsplant/lsplant/src/main/jni lsplant_build)
 
-add_library(xdl STATIC external/xdl/xdl/src/main/cpp/xdl.c)
+add_library(xdl STATIC
+    external/xdl/xdl/src/main/cpp/xdl.c
+    external/xdl/xdl/src/main/cpp/xdl_iterate.c
+    external/xdl/xdl/src/main/cpp/xdl_linker.c
+    external/xdl/xdl/src/main/cpp/xdl_lzma.c
+    external/xdl/xdl/src/main/cpp/xdl_util.c)
 target_include_directories(xdl PUBLIC external/xdl/xdl/src/main/cpp/include)
 
 add_library(${MODULE_NAME} SHARED
