@@ -249,9 +249,12 @@ after each engine lands; `docs-guard` on README before finalizing.
 
 ---
 
-## 11. Open items for spec review
+## 11. Decisions (resolved)
 
-- Confirm folder rename timing (now vs. at scaffold phase).
-- Confirm archive location for originals (`reference/` vs. delete).
-- Min Android/NDK/Zygisk API version target (default: match template).
+- **Folder rename:** done — `pairipfix-frida` → `pairipfix-zygisk`.
+- **Originals:** archived under `reference/` (not deleted).
+- **Min Android / NDK / Zygisk API:** pin to the `5ec1cff/zygisk-module-template`
+  defaults; no custom targets.
+- **GitHub:** repo `ymuuuu/pairipfix-zygisk` created (private), `main` pushed.
+- **Attribution:** README credits original `pairipfix` author **ahmedmani**.
 ```
