@@ -1,5 +1,13 @@
 cmake_minimum_required(VERSION 3.22.1)
-project(sample)
+project(pairipfix_zygisk)
+
+option(PAIRIP_DEBUG "Enable PairIPFix logging" OFF)
+if (PAIRIP_DEBUG)
+    add_compile_definitions(PAIRIP_LOG=1)
+endif()
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 macro(strip_and_move NAME)
     add_custom_command(TARGET ${NAME} POST_BUILD

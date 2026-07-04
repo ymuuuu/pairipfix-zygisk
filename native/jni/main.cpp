@@ -1,12 +1,10 @@
 #include <cstdlib>
 #include <unistd.h>
-#include <android/log.h>
+#include "log.h"
 #include "zygisk.hpp"
 
 using zygisk::Api;
 using zygisk::AppSpecializeArgs;
-
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "PairIPFix", __VA_ARGS__)
 
 class Module : public zygisk::ModuleBase {
 public:
