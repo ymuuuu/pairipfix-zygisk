@@ -1,0 +1,6 @@
+id=pairipfix_zygisk
+name=pairipfix-zygisk
+version=v0.1.0-dev
+versionCode=1
+author=ymuuuu
+description=Zygisk pairip license-check bypass (LSPlant + native anti-detection). Based on pairipfix by ahmedmani.
