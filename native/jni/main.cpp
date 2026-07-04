@@ -1,9 +1,8 @@
-#include <cstdlib>
 #include <string>
-#include <jni.h>
 #include "log.h"
 #include "gate.h"
 #include "java_hooks.h"
+#include "lsplant_init.h"
 #include "native_shim.h"
 #include "zygisk.hpp"
 
@@ -12,9 +11,15 @@ using zygisk::AppSpecializeArgs;
 
 static std::string g_self_package;
 
+// Runs from Anchor.callback (Instrumentation.callApplicationOnCreate) before the
+// app's own Application.onCreate. We must NOT unhook the anchor here: LSPlant docs
+// state that invoking the backup after UnHook is undefined behavior, and
+// Anchor.callback calls the backup right after this returns. The `done` guard makes
+// re-entry cheap; the anchor stays hooked but inert (fires once per process).
 static void Anchor_onCreate(JNIEnv* env, jclass, jobject application) {
     static bool done = false;
     if (done) return;
+    done = true;
 
     jclass appClass = env->GetObjectClass(application);
     jmethodID getCl = env->GetMethodID(appClass, "getClassLoader",
@@ -22,13 +27,9 @@ static void Anchor_onCreate(JNIEnv* env, jclass, jobject application) {
     jobject appCl = env->NewGlobalRef(env->CallObjectMethod(application, getCl));
     if (!pairipfix::HasPairip(env, appCl)) {
         LOGD("not pairip, bail");
-        pairipfix::UninstallAnchor(env);
-        done = true;
         return;
     }
     pairipfix::InstallJavaHooks(env, appCl, g_self_package.c_str());
-    pairipfix::UninstallAnchor(env);
-    done = true;
 }
 
 class Module : public zygisk::ModuleBase {
@@ -39,6 +40,7 @@ public:
     }
 
     void postAppSpecialize(const AppSpecializeArgs *args) override {
+        JNIEnv* env = api->getEnv();
         const char* nice = env->GetStringUTFChars(args->nice_name, nullptr);
         g_self_package = nice ? nice : "";
         env->ReleaseStringUTFChars(args->nice_name, nice);
@@ -51,7 +53,6 @@ public:
 
         pairipfix::InstallNativeShim();
 
-        JNIEnv* env = api->getEnv();
         if (!pairipfix::InitLSPlant(env)) return;
         pairipfix::InstallAnchor(env, (void*)Anchor_onCreate);
     }

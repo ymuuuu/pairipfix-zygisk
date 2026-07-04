@@ -10,8 +10,14 @@
 #include <sys/types.h>
 #include <sys/ptrace.h>
 #include <set>
+#include <mutex>
 
 namespace pairipfix {
+
+// /proc fds we are scrubbing, shared across the openat/read/close hooks which run
+// on arbitrary app threads. Guarded because std::set is not thread-safe.
+static std::set<int>& scrub_fds() { static std::set<int> s; return s; }
+static std::mutex& scrub_mtx() { static std::mutex m; return m; }
 
 using ptrace_t = long(*)(int, pid_t, void*, void*);
 static ptrace_t o_ptrace = nullptr;
@@ -20,7 +26,6 @@ static long my_ptrace(int req, pid_t pid, void* addr, void* data) {
     return o_ptrace ? o_ptrace(req, pid, addr, data) : 0;
 }
 
-static std::set<int>* g_scrub_fds = nullptr;
 static bool sensitive_path(const char* p) {
     if (!p) return false;
     return std::strstr(p, "/proc/self/maps") || std::strstr(p, "/proc/self/status") ||
@@ -40,8 +45,8 @@ static int my_openat(int dirfd, const char* path, int flags, ...) {
     }
     int fd = o_openat(dirfd, path, flags, mode);
     if (fd >= 0 && sensitive_path(path)) {
-        if (!g_scrub_fds) g_scrub_fds = new std::set<int>();
-        g_scrub_fds->insert(fd);
+        std::lock_guard<std::mutex> lk(scrub_mtx());
+        scrub_fds().insert(fd);
     }
     return fd;
 }
@@ -50,7 +55,12 @@ using read_t = ssize_t(*)(int, void*, size_t);
 static read_t o_read = nullptr;
 static ssize_t my_read(int fd, void* buf, size_t count) {
     ssize_t n = o_read(fd, buf, count);
-    if (n > 0 && g_scrub_fds && g_scrub_fds->count(fd)) {
+    bool scrub = false;
+    if (n > 0) {
+        std::lock_guard<std::mutex> lk(scrub_mtx());
+        scrub = scrub_fds().count(fd) != 0;
+    }
+    if (scrub) {
         char* tmp = (char*)std::malloc(static_cast<size_t>(n));
         if (tmp) {
             size_t w = scrub_lines(static_cast<const char*>(buf), static_cast<size_t>(n), tmp, static_cast<size_t>(n));
@@ -65,7 +75,10 @@ static ssize_t my_read(int fd, void* buf, size_t count) {
 using close_t = int(*)(int);
 static close_t o_close = nullptr;
 static int my_close(int fd) {
-    if (g_scrub_fds) g_scrub_fds->erase(fd);
+    {
+        std::lock_guard<std::mutex> lk(scrub_mtx());
+        scrub_fds().erase(fd);
+    }
     return o_close(fd);
 }
 
