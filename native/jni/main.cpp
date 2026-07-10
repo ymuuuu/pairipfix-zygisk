@@ -3,7 +3,6 @@
 #include "gate.h"
 #include "java_hooks.h"
 #include "lsplant_init.h"
-#include "native_shim.h"
 #include "zygisk.hpp"
 
 using zygisk::Api;
@@ -50,8 +49,6 @@ public:
             api->setOption(zygisk::Option::DLCLOSE_MODULE_LIBRARY);
             return;
         }
-
-        pairipfix::InstallNativeShim();
 
         if (!pairipfix::InitLSPlant(env)) return;
         pairipfix::InstallAnchor(env, (void*)Anchor_onCreate);

@@ -27,6 +27,10 @@ set(LSPLANT_BUILD_SHARED OFF CACHE INTERNAL "" FORCE)
 
 add_subdirectory(external/dobby)
 add_subdirectory(external/lsplant/lsplant/src/main/jni lsplant_build)
+# LOG_DISABLED no-ops LSPlant's log macros; LOG_TAG retags the two direct
+# __android_log_print calls in hook_helper.hpp / jni_helper.hpp (which bypass the
+# macros) off the "LSPlant" tag that on-device detectors match.
+target_compile_definitions(lsplant_static PRIVATE LOG_DISABLED LOG_TAG=\"corelib\")
 
 add_library(xdl STATIC
     external/xdl/xdl/src/main/cpp/xdl.c
@@ -41,7 +45,6 @@ add_library(${MODULE_NAME} SHARED
     jni/lsplant_init.cpp
     jni/java_hooks.cpp
     jni/gate.cpp
-    jni/native_shim.cpp
 )
 
 target_include_directories(${MODULE_NAME} PRIVATE

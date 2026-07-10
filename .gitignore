@@ -6,6 +6,7 @@
 /native/build/
 /my_build/
 /output/
+.build-sdk/
 compile_commands.json
 *.o
 *.so.debug
@@ -31,3 +32,7 @@ __pycache__/
 plan.md
 IMPLEMENTATION_PLAN.md
 future_plan.md
+
+# Local detector evidence (contains device attestation/keystore data — do not ship)
+evidince/
+duck_detector_report.txt
