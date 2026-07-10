@@ -57,6 +57,11 @@ runs without the "Get this app from Play" screen.
 No per-app configuration is needed: the module auto-detects pairip apps via the
 `com.pairip.VMRunner` class.
 
+## Resources
+- https://github.com/ahmedmani/pairipfix
+- https://blog.byterialab.com/reversing-googles-new-vm-based-integrity-protection-pairip/
+- https://medium.com/@haxymad/deobfuscating-pairip-reverse-engineering-vm-protector-af8e18ea49ab
+
 ## Legal
 
 For research, interoperability, and analysis of software you own or are authorized
