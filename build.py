@@ -11,7 +11,7 @@ from argparse import ArgumentParser
 
 MODULE_ID = "pairipfix_zygisk"
 MODULE_NAME = "pairipfix-zygisk"
-VER_NAME = "v0.1.0-dev"
+VER_NAME = "v0.2.0"
 
 def initialize(args):
     global ANDROID_HOME, ANDROID_NDK_HOME, PLATFORM, CMAKE_TOOLCHAIN_FILE, ROOT_DIR, \

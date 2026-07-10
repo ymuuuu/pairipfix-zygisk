@@ -4,7 +4,7 @@ A **Zygisk** port of the [`pairipfix`](https://github.com/ahmedmani) LSPosed
 module — same license-check bypass technique, but running as a stealthier Zygisk
 native module instead of Xposed.
 
-> **Status: working — first release (`v0.1.0-dev`).**
+> **Status: working — release (`v0.2.0`).**
 > Happy to read some issues :"D
 
 ## Tested ON
