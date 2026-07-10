@@ -1,6 +1,8 @@
 # Claude Code local
 .claude/
 
+.vscode/
+
 # Build output
 /release/
 /native/build/
@@ -36,3 +38,5 @@ future_plan.md
 # Local detector evidence (contains device attestation/keystore data — do not ship)
 evidince/
 duck_detector_report.txt
+
+build.sh
