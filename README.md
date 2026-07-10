@@ -2,7 +2,7 @@
 
 A **Zygisk** port of the [`pairipfix`](https://github.com/ahmedmani) LSPosed
 module — same license-check bypass technique, but running as a stealthier Zygisk
-native module instead of Xposed, plus a generic native anti-detection shim.
+native module instead of Xposed, plus a ptrace anti-debug shim.
 
 > **Status: working — first release (`v0.1.0-dev`).**
 > Happy to read some issues :"D
@@ -26,8 +26,7 @@ Zygisk injection is harder to fingerprint. This port keeps that stealth advantag
 - Same 4 Java hooks (Signature / LicenseClient / LicenseActivity / LicenseResponse),
   applied via **LSPlant** (the same ART hooking library LSPosed uses under the hood).
 - One extra: `getInstallerPackageName` spoof (from the reference Frida script).
-- A **generic native syscall/libc anti-detection shim** (via Dobby) that scrubs
-  `frida` / `xposed` / `magisk` / `zygisk` traces and denies `ptrace` — closing the
+- A **ptrace anti-debug shim** (via Dobby) that denies `PTRACE_TRACEME` — closing the
   anti-Frida/anti-debug blind spot the LSPosed module and Frida script both leave open.
 - Stealth-first: no companion process, silent by default, hard-gated to pairip apps.
 

@@ -42,7 +42,6 @@ add_library(${MODULE_NAME} SHARED
     jni/java_hooks.cpp
     jni/gate.cpp
     jni/native_shim.cpp
-    jni/scrub.cpp
 )
 
 target_include_directories(${MODULE_NAME} PRIVATE
