@@ -149,7 +149,7 @@ def get_device_abi(device):
     return exec_out(cmd)
 
 
-SUPPORTED_ABIS = ['arm64-v8a', 'armeabi-v7a', 'x86_64', 'x86', 'riscv64']
+SUPPORTED_ABIS = ['arm64-v8a', 'armeabi-v7a']
 
 
 def deploy(target, device, abi, dest, build_type):
